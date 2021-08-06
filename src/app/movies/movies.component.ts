@@ -9,17 +9,39 @@ import { MovieRepository } from '../models/movie.repository';
 })
 export class MoviesComponent implements OnInit {
 
-  ngOnInit(): void {
-  }
   title = "Movie List"
   movies: Movie[];
-  popularMovies: Movie[];
+  filteredMovies: Movie[];
+  // popularMovies: Movie[];
   movieRepository: MovieRepository;
+  // today = new Date();
+  filterSearch: string = "";
 
   constructor() {
     this.movieRepository = new MovieRepository();
     this.movies = this.movieRepository.getMovies();
-    this.popularMovies = this.movieRepository.getPopularMovies();
+    // this.filteredMovies = this.movies;
+    // this.popularMovies = this.movieRepository.getPopularMovies();
+
+  }
+  ngOnInit(): void {
+  }
+
+  // onInputChange() {
+  //   this.filteredMovies = this.filterSearch ?
+  //     this.movies.filter(m => m.title.indexOf(this.filterSearch) !== -1) : this.movies;
+  // }
+
+  addToList($event: any, movie: Movie) {
+    if ($event.target.classList.contains('btn-primary')) {
+      $event.target.innerText = "Remove from List";
+      $event.target.classList.remove('btn-primary');
+      $event.target.classList.add('btn-danger');
+    } else {
+      $event.target.innerText = "Add to the list";
+      $event.target.classList.remove('btn-danger');
+      $event.target.classList.add('btn-primary');
+    }
   }
 
 }
